@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Callback</title>
+    <script>
+        function callback() {
+            console.log("Halo")
+        }
+
+        function buttonClick() {
+            // setTimeout(callback,1000)
+            // console.log("Button Oke")
+            setInterval(callback,1000)
+            console.log("Button Oke")
+        }
+    </script>
+</head>
+<body>
+<button onclick="buttonClick()">Click Disini</button>
+</body>
+</html>

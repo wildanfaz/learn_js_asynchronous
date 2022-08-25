@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web Worker</title>
+<script>
+    const worker = new Worker("Web_Worker.js")
+
+    worker.addEventListener("message", function (event) {
+        //event.data diambil dari postMessage
+        console.log(`Dari web worker : ${event.data}`)
+    })
+
+    function buttonClick() {
+        console.log("Start Log");
+        //mengirim event.data ke Web_Worker.js
+        worker.postMessage(20000)
+        //web worker async
+        console.log("Finish Log");
+    }
+</script>
+</head>
+<body>
+<button onclick="buttonClick()">Search Products</button>
+</body>
+</html>

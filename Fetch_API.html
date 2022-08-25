@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fetch API</title>
+    <script>
+        function getProductsUrl(keyword) {
+            return `https://www.blibli.com/backend/search/products?searchTerm=${keyword}`;
+        }
+
+        function getProducts(keyword) {
+            // Code Fetch API Here!
+            const url = getProductsUrl()
+            //fetch menghasilkan promise
+            return fetch(url, {
+                method:"GET"
+            }).then(function (response) {
+                return response.json()
+            })
+        }
+
+        function clearProducts() {
+            const productUl = document.getElementById("products");
+            productUl.textContent = "";
+        }
+
+        // function displayProducts(data) {
+        //     data.data.products.forEach(product => displayProduct(product));
+        // }
+
+        function displayProduct(product) {
+            //membuat list yang diambil dari link /products
+            const productLi = document.createElement("li");
+            productLi.textContent = product.name;
+
+            //membuat unordered list dan mempunyai isi list yang diambil dari link /products
+            const productUl = document.getElementById("products");
+            productUl.appendChild(productLi);
+        }
+
+        function buttonClick() {
+            const promise = getProducts(document.getElementById("keyword").value);
+        promise.then(function (value) {
+                        //harus return jika selanjutnya masih ada then
+                        return value.data.products
+            /*
+            kesimpulan
+            return value.data.products
+            value hasil dari promise
+            lalu mengambil data dari folder link /products
+            dan jadilah value.data.products
+            mungkin ya gatau juga si
+            */
+                    })
+                    .then(function (products){
+                        clearProducts()
+                        /*
+                        masukan keyword ke link, lalu GET link tsb , convert ke JSON
+                        agar bisa dibaca dan dikonvert ke object js, lalu
+                        gunakan foreach json ,untuk membuat "list" isi dari tiap isi data
+                        pada url di atas, kenapa bisa di foreach datanya?
+                        mungkin isi dari json tersebut berupa array jadi bisa diforeach
+                        untuk dibuat listnya
+                         */
+                        products.forEach(function (product) {
+                            displayProduct(product)
+                            //list produk bersumber dari array json link /products
+                            //mungkin
+                        })
+                    })
+                    .catch(function (error) {
+                        alert(error.message)
+                    })
+                    .finally(function () {
+                        console.log("Akhirnyaaa")
+                    })
+        }
+    </script>
+</head>
+<body>
+<input type="text" id="keyword">
+<button onclick="buttonClick()">Search Products</button>
+<ul id="products"></ul>
+</body>
+</html>
